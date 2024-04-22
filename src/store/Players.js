@@ -15,11 +15,13 @@ const mutations = {
         state.currentPlayer = player;
     },
     updateState(state, payload){
+        console.log("updating " + payload.field + ' with ' + payload.value );
         state[payload.field] = payload.value
     }
 }
 const actions = {
     set({commit}, payload){
+        console.log("setting " + payload.field + ' with ' + payload.value );
         commit('updateState', {field: payload.field, value: payload.value})
     },
     moveTo({dispatch, getters}, payload){
@@ -47,16 +49,22 @@ const actions = {
     },
     payMoney({commit, state}, payload){
         console.log('payMoney - ' + JSON.stringify(payload));
-        let tempPlayer = state.players[state.players.findIndex(x=>x.token == payload.token)];
+        let tempPlayerArray = state.players;
+        let tokenIndex = state.players.findIndex(x=>x.token == payload.token);
+        let tempPlayer = state.players[tokenIndex];
         tempPlayer.cash -= payload.value;
-        commit('updateState', {field:`${state.players[state.players.findIndex(x=>x.token == payload.token)]}`, value: tempPlayer})
+        tempPlayerArray[tokenIndex] = tempPlayer;
+        commit('updateState', {field: 'players', value: tempPlayerArray})
 
     },
     getMoney({commit, state}, payload){
         console.log('getMoney - ' + JSON.stringify(payload));
-        let tempPlayer = state.players[state.players.findIndex(x=>x.token == payload.token)];
+        let tempPlayerArray = state.players;
+        let tokenIndex = state.players.findIndex(x=>x.token == payload.token);
+        let tempPlayer = state.players[tokenIndex];
         tempPlayer.cash += payload.value;
-        commit('updateState', {field:`${state.players[state.players.findIndex(x=>x.token == payload.token)]}`, value: tempPlayer})
+        tempPlayerArray[tokenIndex] = tempPlayer;
+        commit('updateState', {field: 'players', value: tempPlayerArray})
     },
     
 }

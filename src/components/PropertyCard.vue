@@ -72,7 +72,7 @@
         },
         computed:{
             cardImage(){
-                return require('../assets/images/'+`${this.PropertyData.propertyImage.toLowerCase()}`+'.png'); 
+                return (this.$props.propClass == 'Property') ? null : require('../assets/images/'+`${this.PropertyData.propertyImage.toLowerCase()}`+'.png'); 
             },
             propertyOwner(){
                 return this.$store.getters['Players/players'][this.$store.getters['Players/players'].findIndex(x => x.playerId == this.PropertyData.owner)].token
@@ -143,6 +143,9 @@
     .Green-Group h3, .Green-Group h2{color:#000;}
     .Blue-Group{background-color:darkblue;}
     .Blue-Group h3, .Blue-Group h2{color:#fff;}
+    .SinglePlayerInventory .Railroad{background-color:#000}
+    .SinglePlayerInventory .Railroad  h3, .SinglePlayerInventory .Railroad h2{color:#fff;}
+
     .PropertyBody ul{
         display: inline-flex;
         flex-direction: column;
